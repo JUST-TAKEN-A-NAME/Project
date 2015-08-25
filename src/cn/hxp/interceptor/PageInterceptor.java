@@ -119,13 +119,29 @@ public class PageInterceptor implements Interceptor {
             setParameters(countStmt, mappedStatement, countBS, boundSql.getParameterObject());
             rs = countStmt.executeQuery();
             int totalCount = 0;
+            int nextPage = page.getNextPage();
+            int prePage = page.getPrePage();
+            int currentPage = page.getCurrentPage();
+            int totalPage = 0;
             if (rs.next()) {
                 totalCount = rs.getInt(1);
             }
             page.setTotalCount(totalCount);
-            int totalPage = totalCount / page.getPageSize() + ((totalCount % page.getPageSize() == 0) ? 0 : 1);
+            totalPage = totalCount / page.getPageSize() + ((totalCount % page.getPageSize() == 0) ? 0 : 1);
             page.setTotalPage(totalPage);
-
+            
+            if(nextPage + 1 > totalPage){
+            	page.setNextPage(totalPage);
+            }else{
+            	page.setNextPage(currentPage+1);
+            }
+            if(prePage <= 1){
+            	page.setPrePage(1);
+            }else{
+            	page.setPrePage(currentPage-1);
+            }
+            
+            
         } catch (SQLException e) {
             logger.error("Ignore this exception", e);
         } finally {

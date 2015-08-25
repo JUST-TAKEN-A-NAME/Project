@@ -1,7 +1,6 @@
 $(function(){
 	window.onload = function(){
 		var i = $("#totalCount").val();
-		alert(i);
 		if(!isNaN(i)){
 			var webPath = "/" + window.location.pathname.split("/")[1];
 			var bolgId = $("#bolgId").val();
@@ -30,7 +29,32 @@ $(function(){
 		$(this).removeAttr("disabled");
 	})
 	
+
+	$(".a_left").click(function(){
+		loadingStyle();
+		var webPath = "/" + window.location.pathname.split("/")[1];
+		$.ajax({
+			type: 'POST',
+			data:{bolgId:$("#bolgId").val(),currentPage:$("#prePage").val()},
+			url: webPath + "/pinglun/loadComment",
+			success: function(data) {
+				resolveComment(data.list,data.page);
+			}
+		});
+	});
 	
+	$(".a_right").click(function(){
+		loadingStyle();
+		var webPath = "/" + window.location.pathname.split("/")[1];
+		$.ajax({
+			type: 'POST',
+			data:{bolgId:$("#bolgId").val(),currentPage:$("#nextPage").val()},
+			url: webPath + "/pinglun/loadComment",
+			success: function(data) {
+				resolveComment(data.list,data.page);
+			}
+		});
+	});
 });
 
 
@@ -117,32 +141,13 @@ function postComment(){
 function loadComment(){
 	var bolgId = $("#bolgId").val();
 	var webPath = "/" + window.location.pathname.split("/")[1];
-	alert(bolgId);
 	$.ajax({
 		type: 'POST',
-		url: webPath + "/pinglun/loadComment?bolgId=" + bolgId,
+		data:{bolgId:bolgId},
+		url: webPath + "/pinglun/loadComment",
 		success: function(data) {
 			if (data.state == 666) {
-				var pinglunList = data.list;
-				var html;
-				$.each(pinglunList,function(i,item){
-					 html = 
-						'<div class="reply"><div class="user_head_img"><img src="'+item.userHeadImg+'"/></div>'+
-							'<div class="reply_msg_box" id="'+item.commentId+'">'+
-						    	'<div class="user_info">'+
-						    	'<span class="user_name">'+item.userName+'</span>'+
-						    	'<span class="border_left">发表于'+item.commentDate+'</span>'+
-						    	'<span class="border_left"><a href="javascript:optenReplyBox('+item.commentId+');">回复</a></span>'+
-						    	'</div>'+
-						     	'<div class="reply_msg"><p>'+item.comment+'</p></div>'+
-						 	'</div>'+
-						 '</div>';
-					 
-
-					$(".yuedu_reply").append(html);
-					 
-				})
-				
+				resolveComment(data.list,data.page);
 			} else {
 				alert(data.msg);
 			}
@@ -151,4 +156,37 @@ function loadComment(){
 	
 	
 }
+function resolveComment(list,page){
+	var html = "";
+	$.each(list,function(i,item){
+		html += 
+			'<div class="reply"><div class="user_head_img"><img src="'+item.userHeadImg+'"/></div>'+
+				'<div class="reply_msg_box" id="'+item.commentId+'">'+
+			    	'<div class="user_info">'+
+			    	'<span class="user_name">'+item.userName+'</span>'+
+			    	'<span class="border_left">发表于'+item.commentDate+'</span>'+
+			    	'<span class="border_left"><a href="javascript:optenReplyBox('+item.commentId+');">回复</a></span>'+
+			    	'</div>'+
+			     	'<div class="reply_msg"><p>'+item.comment+'</p></div>'+
+			 	'</div>'+
+			 '</div>';
+	})
+	$(".yuedu_reply").html(html);
+	var page = '<input type="hidden" id="prePage" value="'+page.prePage+'"/><input type="hidden" id="nextPage" value="'+page.nextPage+'"/>'+
+	'<span>共'+page.totalPage+'页</span>/<span>当前：第'+page.currentPage+'页</span>/<span>跳转到第<input type="text"/>页,<input type="button" value="GO"/></span>';
+	$(".div_tiaozhuan").html(page);
+	
+}
 
+
+
+
+function changePageState(preVal,nextVal){
+	
+}
+
+
+function loadingStyle(){
+	var html ='<div class="loadbox"><div class="cssload-box-loading"></div><p>loading....</p></div>';
+	$(".yuedu_reply").html(html);
+}

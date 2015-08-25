@@ -16,7 +16,7 @@ public class PageParameter {
     private int totalCount;
 
     public PageParameter() {
-        this.currentPage = 2;
+        this.currentPage = 1;
         this.pageSize = DEFAULT_PAGE_SIZE;
     }
 

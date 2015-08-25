@@ -6,11 +6,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -132,7 +130,7 @@ public class PinglunController extends BaseController {
 				}
 				map.put("state", "666");
 				map.put("list", resultList);
-				request.setAttribute("totalCount", totalCount);
+				map.put("page", page);
 			}else{
 				map.put("state", "404");
 				map.put("msg", "还没有人评论！！");	

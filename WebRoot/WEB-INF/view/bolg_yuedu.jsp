@@ -111,15 +111,13 @@
         </div>
         <div class="reply_context_box">
             <div class="yuedu_reply">
-               <div class="loadbox" style="display: none;"><div class="cssload-box-loading"></div><p>loading....</p></div> 
+               
             </div>
         </div>
         <div class="newindex_pagination_box">
         	<div class="xixi">
 	            <a href="javascript:;" class="a_left">上一页</a><a href="javascript:;" class="a_right"> 下一页</a>
-	            <div class="div_tiaozhuan">
-	                <span>共3页</span>/<span>当前：第1页</span>/<span>跳转到第<input type="text"/>页,<input type="button" value="GO"/></span>
-	            </div>
+	            <div class="div_tiaozhuan"></div>
 	        </div>
 	    </div>
     </div>
