@@ -13,4 +13,7 @@ public interface BolgPinglunBiz {
     
 
 	List<BolgPinglun> selectCommentByBolgIdPage(PaginationeEntity entity);
+	
+
+	int selectCountByBolgId(int bolgId);
 }

@@ -19,6 +19,7 @@ import cn.hxp.entity.BolgContent;
 import cn.hxp.entity.BolgInfo;
 import cn.hxp.service.BolgContentBiz;
 import cn.hxp.service.BolgInfoBiz;
+import cn.hxp.service.BolgPinglunBiz;
 import cn.hxp.utils.JsonUtils;
 import cn.hxp.utils.StringUtils;
 
@@ -34,6 +35,9 @@ public class BolgController extends BaseController{
 	@Resource
 	private BolgContentBiz bolgContentBiz;
 
+	@Resource
+	private BolgPinglunBiz bolgPinglunBiz;
+	
 	@RequestMapping("index")
 	public String index(){
 		return "bolg_index";
@@ -47,29 +51,29 @@ public class BolgController extends BaseController{
 		HashMap<String,String> map = new HashMap<String, String>();
 		
 		String bolgId = request.getParameter("bolgId");
-		
 		//bolgId在这里测试，设一个固定值
 		bolgId = "143";
 		
-		
-		if(bolgId != null && !bolgId.trim().equals("")){
-			if(!StringUtils.isNumeric(bolgId)){
-				map.put("state", "501");
-				map.put("msg", "错误！！！！");
-				session.setAttribute("errMsg", map);
-				return "err";
-			}
+		if(StringUtils.isNumeric(bolgId)){
+			int bolgId_int = Integer.parseInt(bolgId);
+			
+			
 			BolgInfo bolgInfo = new BolgInfo();
 			
-			
-			bolgInfo = bolgInfoBiz.selectByPrimaryKey(Integer.parseInt(bolgId));
+			bolgInfo = bolgInfoBiz.selectByPrimaryKey(bolgId_int);
 			request.setAttribute("bolgInfo", bolgInfo);
+
+			request.setAttribute("totalCount", bolgPinglunBiz.selectCountByBolgId(bolgId_int));//评论总条数
 			
 			// 用户浏览这篇博客，则把bolId放到session中，如果bolgId已存在则覆盖！
 			session.setAttribute("bolgId", bolgId);
 			return "bolg_yuedu";
+		}else{
+			map.put("state", "501");
+			map.put("msg", "错误！！！！");
+			request.setAttribute("errMsg", map);
+			return "err";
 		}
-		return "";
 	}
 
 	@RequestMapping("getContentByBolgId")

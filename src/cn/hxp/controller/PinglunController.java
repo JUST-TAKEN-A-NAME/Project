@@ -11,6 +11,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -28,6 +30,9 @@ import cn.hxp.utils.StringUtils;
 @Controller
 @RequestMapping("/pinglun")
 public class PinglunController extends BaseController {
+
+	private static final Logger logger = LoggerFactory.getLogger(PinglunController.class);
+	
 	
 	@Resource
 	public BolgPinglunBiz bolgPinglunBiz;
@@ -81,40 +86,62 @@ public class PinglunController extends BaseController {
 	
 	
 	@RequestMapping("loadComment")
-	public void loadComment(String bolgId){
+	public void loadComment(String bolgId,String currentPage){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 //		String bolgId = request.getParameter("bolgId");
-		if(!StringUtils.checkIsEmpty(bolgId)){
+		if(StringUtils.isNumeric(bolgId)){
+			int bolgId_int = Integer.parseInt(bolgId);
 			
-			List<BolgPinglun> list = new ArrayList<BolgPinglun>();
+			int totalCount = bolgPinglunBiz.selectCountByBolgId(bolgId_int);//评论总条数
 			
-			PaginationeEntity entity = new PaginationeEntity();
-			entity.setCanshu("143");
-			entity.setPage(new PageParameter());
-			list = bolgPinglunBiz.selectCommentByBolgIdPage(entity);
-			
-			if(list.size() > 0){
-				SimpleDateFormat smp = new SimpleDateFormat("yyyy-MM-dd");
-				List<PinglunEntity> resultList = new ArrayList<PinglunEntity>();
-				HashMap<String,String> hashmap = new HashMap<String, String>();
-				for(BolgPinglun pinglun : list){
-					
-					hashmap = bolgUserBiz.selectImgandName(pinglun.getPinglunrenId());
-					
-					resultList.add(new PinglunEntity(hashmap.get("user_head_img"), pinglun.getPinglunId().toString(), hashmap.get("user_name"), smp.format(pinglun.getPinglunDate()),pinglun.getPinglunContent()));
-					
-					hashmap.clear();
-				}
+			if(totalCount > 0){
+				List<BolgPinglun> list = new ArrayList<BolgPinglun>();//查询结果容器
+				PaginationeEntity entity = new PaginationeEntity();
+				//entity.setCanshu("143");
+				PageParameter page = new PageParameter();
 				
+				if(StringUtils.isNumeric((currentPage))){//判断分页参数合法
+					int currentPage_int = Integer.parseInt(currentPage);
+					if(currentPage_int > totalCount/5){
+						page.setCurrentPage(currentPage_int);//设置分页参数
+					}else if(currentPage_int <= 0){
+						page.setCurrentPage(1);//设置分页参数
+					}else{
+						page.setCurrentPage(currentPage_int);//设置分页参数
+					}
+				}
+				/*else{
+					map.put("state", "503");
+					map.put("msg", "非法请求");
+					SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					logger.error("于"+spf.format(new Date())+"时，来自["+IpAddrUtil.getUserIp(request)+"]的请求中附带的分页参数不符合或非法！！！！");
+					JsonUtils.writeJson(response, map);
+					return;
+				}*/
+				entity.setBolgId(bolgId);
+				entity.setPage(page);
+				list = bolgPinglunBiz.selectCommentByBolgIdPage(entity);
+				SimpleDateFormat smp = new SimpleDateFormat("yyyy-MM-dd");
+				List<PinglunEntity> resultList = new ArrayList<PinglunEntity>();//最终结果容器
+				HashMap<String,String> hashmap = new HashMap<String, String>();//翻译结果容器
+				//下面进行循环插值
+				for(BolgPinglun pinglun : list){
+					hashmap = bolgUserBiz.selectImgandName(pinglun.getPinglunrenId());
+					resultList.add(new PinglunEntity(hashmap.get("user_head_img"), pinglun.getPinglunId().toString(), hashmap.get("user_name"), smp.format(pinglun.getPinglunDate()),pinglun.getPinglunContent()));
+					//hashmap.clear();
+				}
 				map.put("state", "666");
 				map.put("list", resultList);
+				request.setAttribute("totalCount", totalCount);
 			}else{
 				map.put("state", "404");
 				map.put("msg", "还没有人评论！！");	
 			}
 		}else{
-			map.put("state", "501");
-			map.put("msg", "没找到bolgId！");	
+			map.put("state", "404");
+			map.put("msg", "未找到这篇博客的评论！！");
+			SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			logger.error("时间:"+spf.format(new Date())+",IP:["+IpAddrUtil.getUserIp(request)+"]的请求中附带的必须参数为空！");
 		}
 		JsonUtils.writeJson(response, map);
 	}

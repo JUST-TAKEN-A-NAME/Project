@@ -107,7 +107,7 @@
     <!----差看评论 start--->
     <div class="yuedu_reply_box">
         <div class="reply_title">
-            <div class="title_bgimg"><h3>共有5条评论：</h3></div>
+            <div class="title_bgimg"><input type="hidden" id="totalCount" value="${totalCount}"><h3>共有${totalCount}条评论：</h3></div>
         </div>
         <div class="reply_context_box">
             <div class="yuedu_reply">

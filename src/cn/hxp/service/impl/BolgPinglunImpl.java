@@ -34,6 +34,13 @@ public class BolgPinglunImpl implements BolgPinglunBiz {
 		
 		return bolgPinglunDao.selectCommentByBolgIdPage(entity);
 	}
+
+
+	@Override
+	public int selectCountByBolgId(int bolgId) {
+		// TODO Auto-generated method stub
+		return bolgPinglunDao.selectCountByBolgId(bolgId);
+	}
 	
 
 	

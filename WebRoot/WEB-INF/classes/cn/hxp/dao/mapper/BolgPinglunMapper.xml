@@ -32,7 +32,13 @@
   
   <select id="selectCommentByBolgIdPage" resultMap="BaseResultMap">
   	select 
-    <include refid="Base_Column_List" /> from bolg_pinglun where pinglun_bolg_id = #{canshu}
+    <include refid="Base_Column_List" /> from bolg_pinglun where pinglun_bolg_id = #{bolgId}
+  </select>
+  
+  
+  
+  <select id="selectCountByBolgId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+  	select count(0) from bolg_pinglun where pinglun_bolg_id = #{bolgId}
   </select>
   
   

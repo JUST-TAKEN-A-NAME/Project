@@ -11,7 +11,7 @@ public class PaginationeEntity {
       
     private String dir = "asc";  
       
-    private Object canshu;
+    private String bolgId;
     
     private Map<String, Object> hashMap = new HashMap<String, Object>();
 
@@ -39,12 +39,12 @@ public class PaginationeEntity {
 		this.dir = dir;
 	}
 
-	public Object getCanshu() {
-		return canshu;
+	public String getBolgId() {
+		return bolgId;
 	}
 
-	public void setCanshu(Object canshu) {
-		this.canshu = canshu;
+	public void setBolgId(String bolgId) {
+		this.bolgId = bolgId;
 	}
 
 	public Map<String, Object> getHashMap() {
@@ -53,7 +53,7 @@ public class PaginationeEntity {
 
 	public void setHashMap(Map<String, Object> hashMap) {
 		this.hashMap = hashMap;
-	}  
-  
-   
+	}
+
+	
 }  

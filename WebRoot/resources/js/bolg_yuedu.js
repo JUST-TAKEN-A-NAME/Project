@@ -1,21 +1,25 @@
 $(function(){
 	window.onload = function(){
-		var webPath = "/" + window.location.pathname.split("/")[1];
-		var bolgId = $("#bolgId").val();
-		$.ajax({
-			type: 'POST',
-			url: webPath + "/bolg/getContentByBolgId?bolgId=" + bolgId,
-			success: function(data) {
-				if (data.state == 666) {
-					var end = "<div class='end'>------------------------END------------------------</div>";
-					$("#bolg_content").html(data.content + end);
-				} else {
-					alert(data.msg);
+		var i = $("#totalCount").val();
+		alert(i);
+		if(!isNaN(i)){
+			var webPath = "/" + window.location.pathname.split("/")[1];
+			var bolgId = $("#bolgId").val();
+			$.ajax({
+				type: 'POST',
+				url: webPath + "/bolg/getContentByBolgId?bolgId=" + bolgId,
+				success: function(data) {
+					if (data.state == 666) {
+						var end = "<div class='end'>------------------------END------------------------</div>";
+						$("#bolg_content").html(data.content + end);
+					} else {
+						alert(data.msg);
+					}
 				}
-			}
-		});
-		
-		loadComment();
+			});
+
+			loadComment();
+		}
 	};
 	
 	
@@ -113,6 +117,7 @@ function postComment(){
 function loadComment(){
 	var bolgId = $("#bolgId").val();
 	var webPath = "/" + window.location.pathname.split("/")[1];
+	alert(bolgId);
 	$.ajax({
 		type: 'POST',
 		url: webPath + "/pinglun/loadComment?bolgId=" + bolgId,

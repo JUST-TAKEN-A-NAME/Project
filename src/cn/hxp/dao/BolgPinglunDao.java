@@ -21,4 +21,5 @@ public interface BolgPinglunDao {
 
 	List<BolgPinglun> selectCommentByBolgIdPage(PaginationeEntity entity);
 	
+	int selectCountByBolgId(int bolgId);
 }
