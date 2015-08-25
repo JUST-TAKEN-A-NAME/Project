@@ -1,0 +1,15 @@
+.mybutton{
+	background-image: -webkit-linear-gradient(bottom, #448AE4 0%, #79BCE9 100%);
+	border: 1px solid #448AE4;
+}
+
+#some_file_queue{
+	background-color: #FFF;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    height: 103px;
+    margin-bottom: 10px;
+    overflow: auto;
+    padding: 5px 10px;
+    width: 300px;
+}

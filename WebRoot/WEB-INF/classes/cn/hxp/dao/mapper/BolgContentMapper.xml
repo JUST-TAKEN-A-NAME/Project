@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.hxp.dao.BolgContentDao" >
+  <resultMap id="BaseResultMap" type="cn.hxp.entity.BolgContent" >
+    <id column="bolg_content_id" property="bolgContentId" jdbcType="INTEGER" />
+    <result column="bolg_id" property="bolgId" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.hxp.entity.BolgContent" extends="BaseResultMap" >
+    <result column="bolg_content" property="bolgContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    bolg_content_id, bolg_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    bolg_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bolg_content
+    where bolg_content_id = #{bolgContentId,jdbcType=INTEGER}
+  </select>
+  
+  
+  <select id="selectByBolgInfoId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+  	select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bolg_content
+    where bolg_id = #{bolgId,jdbcType=INTEGER}
+  </select>
+  
+  
+  
+  
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bolg_content
+    where bolg_content_id = #{bolgContentId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.hxp.entity.BolgContent" >
+    insert into bolg_content ( bolg_id, bolg_content
+      )
+    values ( #{bolgId,jdbcType=INTEGER}, #{bolgContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.hxp.entity.BolgContent" >
+    insert into bolg_content
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bolgContentId != null" >
+        bolg_content_id,
+      </if>
+      <if test="bolgId != null" >
+        bolg_id,
+      </if>
+      <if test="bolgContent != null" >
+        bolg_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bolgContentId != null" >
+        #{bolgContentId,jdbcType=INTEGER},
+      </if>
+      <if test="bolgId != null" >
+        #{bolgId,jdbcType=INTEGER},
+      </if>
+      <if test="bolgContent != null" >
+        #{bolgContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.hxp.entity.BolgContent" >
+    update bolg_content
+    <set >
+      <if test="bolgId != null" >
+        bolg_id = #{bolgId,jdbcType=INTEGER},
+      </if>
+      <if test="bolgContent != null" >
+        bolg_content = #{bolgContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where bolg_content_id = #{bolgContentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.hxp.entity.BolgContent" >
+    update bolg_content
+    set bolg_id = #{bolgId,jdbcType=INTEGER},
+      bolg_content = #{bolgContent,jdbcType=LONGVARCHAR}
+    where bolg_content_id = #{bolgContentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.hxp.entity.BolgContent" >
+    update bolg_content
+    set bolg_id = #{bolgId,jdbcType=INTEGER}
+    where bolg_content_id = #{bolgContentId,jdbcType=INTEGER}
+  </update>
+</mapper>

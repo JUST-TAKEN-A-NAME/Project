@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.hxp.dao.BolgPinglunBereplyDao" >
+  <resultMap id="BaseResultMap" type="cn.hxp.entity.BolgPinglunBereply" >
+    <id column="be_reply_id" property="beReplyId" jdbcType="INTEGER" />
+    <result column="bolg_pinglun_id" property="bolgPinglunId" jdbcType="INTEGER" />
+    <result column="from_user_id" property="fromUserId" jdbcType="INTEGER" />
+    <result column="from_user_ip" property="fromUserIp" jdbcType="VARCHAR" />
+    <result column="be_reply_date" property="beReplyDate" jdbcType="TIMESTAMP" />
+    <result column="to_user_id" property="toUserId" jdbcType="INTEGER" />
+    <result column="be_reply_content" property="beReplyContent" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    be_reply_id, bolg_pinglun_id, from_user_id, from_user_ip, be_reply_date, 
+    to_user_id, be_reply_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bolg_pinglun_bereply
+    where be_reply_id = #{beReplyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bolg_pinglun_bereply
+    where be_reply_id = #{beReplyId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.hxp.entity.BolgPinglunBereply" >
+    insert into bolg_pinglun_bereply (be_reply_id, bolg_pinglun_id, from_user_id, 
+      from_user_ip, be_reply_date, 
+      to_user_id, be_reply_content
+      )
+    values (#{beReplyId,jdbcType=INTEGER}, #{bolgPinglunId,jdbcType=INTEGER}, #{fromUserId,jdbcType=INTEGER}, 
+      #{fromUserIp,jdbcType=VARCHAR}, #{beReplyDate,jdbcType=TIMESTAMP}, 
+      #{toUserId,jdbcType=INTEGER}, #{beReplyContent,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.hxp.entity.BolgPinglunBereply" >
+    insert into bolg_pinglun_bereply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="beReplyId != null" >
+        be_reply_id,
+      </if>
+      <if test="bolgPinglunId != null" >
+        bolg_pinglun_id,
+      </if>
+      <if test="fromUserId != null" >
+        from_user_id,
+      </if>
+      <if test="fromUserIp != null" >
+        from_user_ip,
+      </if>
+      <if test="beReplyDate != null" >
+        be_reply_date,
+      </if>
+      <if test="toUserId != null" >
+        to_user_id,
+      </if>
+      <if test="beReplyContent != null" >
+        be_reply_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="beReplyId != null" >
+        #{beReplyId,jdbcType=INTEGER},
+      </if>
+      <if test="bolgPinglunId != null" >
+        #{bolgPinglunId,jdbcType=INTEGER},
+      </if>
+      <if test="fromUserId != null" >
+        #{fromUserId,jdbcType=INTEGER},
+      </if>
+      <if test="fromUserIp != null" >
+        #{fromUserIp,jdbcType=VARCHAR},
+      </if>
+      <if test="beReplyDate != null" >
+        #{beReplyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="toUserId != null" >
+        #{toUserId,jdbcType=INTEGER},
+      </if>
+      <if test="beReplyContent != null" >
+        #{beReplyContent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.hxp.entity.BolgPinglunBereply" >
+    update bolg_pinglun_bereply
+    <set >
+      <if test="bolgPinglunId != null" >
+        bolg_pinglun_id = #{bolgPinglunId,jdbcType=INTEGER},
+      </if>
+      <if test="fromUserId != null" >
+        from_user_id = #{fromUserId,jdbcType=INTEGER},
+      </if>
+      <if test="fromUserIp != null" >
+        from_user_ip = #{fromUserIp,jdbcType=VARCHAR},
+      </if>
+      <if test="beReplyDate != null" >
+        be_reply_date = #{beReplyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="toUserId != null" >
+        to_user_id = #{toUserId,jdbcType=INTEGER},
+      </if>
+      <if test="beReplyContent != null" >
+        be_reply_content = #{beReplyContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where be_reply_id = #{beReplyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.hxp.entity.BolgPinglunBereply" >
+    update bolg_pinglun_bereply
+    set bolg_pinglun_id = #{bolgPinglunId,jdbcType=INTEGER},
+      from_user_id = #{fromUserId,jdbcType=INTEGER},
+      from_user_ip = #{fromUserIp,jdbcType=VARCHAR},
+      be_reply_date = #{beReplyDate,jdbcType=TIMESTAMP},
+      to_user_id = #{toUserId,jdbcType=INTEGER},
+      be_reply_content = #{beReplyContent,jdbcType=VARCHAR}
+    where be_reply_id = #{beReplyId,jdbcType=INTEGER}
+  </update>
+</mapper>

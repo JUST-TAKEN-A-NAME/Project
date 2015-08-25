@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.hxp.dao.BolgInfoDao" >
+  <resultMap id="BaseResultMap" type="cn.hxp.entity.BolgInfo" >
+    <id column="bolg_id" property="bolgId" jdbcType="INTEGER" />
+    <result column="bolg_user_id" property="bolgUserId" jdbcType="VARCHAR" />
+    <result column="bolg_title" property="bolgTitle" jdbcType="VARCHAR" />
+    <result column="bolg_tags" property="bolgTags" jdbcType="VARCHAR" />
+    <result column="bolg_type" property="bolgType" jdbcType="INTEGER" />
+    <result column="bolg_summary" property="bolgSummary" jdbcType="VARCHAR" />
+    <result column="bolg_createtime" property="bolgCreatetime" jdbcType="TIMESTAMP" />
+    <result column="bolg_comment_count" property="bolgCommentCount" jdbcType="INTEGER" />
+    <result column="bolg_likes_count" property="bolgLikesCount" jdbcType="INTEGER" />
+    <result column="bolg_browse" property="bolgBrowse" jdbcType="INTEGER" />
+    <result column="bolg_last_edit_time" property="bolgLastEditTime" jdbcType="TIMESTAMP" />
+    <result column="bolg_is_report" property="bolgIsReport" jdbcType="INTEGER" />
+    <result column="bolg_grade" property="bolgGrade" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    bolg_id, bolg_user_id, bolg_title, bolg_tags, bolg_type, bolg_summary, bolg_createtime, 
+    bolg_comment_count, bolg_likes_count, bolg_browse, bolg_last_edit_time, 
+    bolg_is_report, bolg_grade
+  </sql>
+  
+  
+  <!-- 根据主键查找 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bolg_info
+    where bolg_id = #{bolgId,jdbcType=INTEGER}
+  </select>
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bolg_info
+    where bolg_id = #{bolgId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="cn.hxp.entity.BolgInfo">
+    insert into bolg_info (
+    	bolg_user_id
+      )
+    values (
+    	#{bolgUserId,jdbcType=VARCHAR}
+      )
+      
+      <selectKey resultType="int" keyProperty="bolgId" order="AFTER">  
+        SELECT LAST_INSERT_ID() AS bolgId  
+      </selectKey>
+  </insert>
+  
+  
+  
+  <update id="update" parameterType="cn.hxp.entity.BolgInfo" >
+    update bolg_info
+    <set >
+      <if test="bolgTitle != null" >
+        bolg_title = #{bolgTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="bolgTags != null" >
+        bolg_tags = #{bolgTags,jdbcType=VARCHAR},
+      </if>
+      <if test="bolgType != null" >
+        bolg_type = #{bolgType,jdbcType=INTEGER},
+      </if>
+      <if test="bolgSummary != null" >
+        bolg_summary = #{bolgSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="bolgCreatetime != null" >
+        bolg_createtime = #{bolgCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bolgLastEditTime != null" >
+        bolg_last_edit_time = #{bolgLastEditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bolgIsReport != null" >
+        bolg_is_report = #{bolgIsReport,jdbcType=INTEGER},
+      </if>
+      <if test="bolgGrade != null" >
+        bolg_grade = #{bolgGrade,jdbcType=INTEGER},
+      </if>
+    </set>
+    where bolg_id = #{bolgId,jdbcType=INTEGER}
+  </update>
+  
+  
+  
+  <update id="updateByPrimaryKey" parameterType="cn.hxp.entity.BolgInfo" >
+    update bolg_info
+    set bolg_user_id = #{bolgUserId,jdbcType=VARCHAR},
+      bolg_title = #{bolgTitle,jdbcType=VARCHAR},
+      bolg_tags = #{bolgTags,jdbcType=VARCHAR},
+      bolg_type = #{bolgType,jdbcType=INTEGER},
+      bolg_summary = #{bolgSummary,jdbcType=VARCHAR},
+      bolg_createtime = #{bolgCreatetime,jdbcType=DATE},
+      bolg_comment_count = #{bolgCommentCount,jdbcType=INTEGER},
+      bolg_likes_count = #{bolgLikesCount,jdbcType=INTEGER},
+      bolg_browse = #{bolgBrowse,jdbcType=INTEGER},
+      bolg_last_edit_time = #{bolgLastEditTime,jdbcType=DATE},
+      bolg_is_report = #{bolgIsReport,jdbcType=INTEGER},
+      bolg_grade = #{bolgGrade,jdbcType=INTEGER}
+    where bolg_id = #{bolgId,jdbcType=INTEGER}
+  </update>
+</mapper>

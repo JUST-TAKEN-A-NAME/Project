@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.hxp.dao.THxpUserMapper">
+	<resultMap id="BaseResultMap" type="cn.hxp.entity.THxpUser">
+		<id column="USER_ID" property="userId" jdbcType="INTEGER" />
+		<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+		<result column="USER_PASSWORD" property="userPassword"
+			jdbcType="VARCHAR" />
+		<result column="USER_HEADIMG" property="userHeadimg" jdbcType="VARCHAR" />
+		<result column="USER_EXP" property="userExp" jdbcType="INTEGER" />
+		<result column="USER_GRADE" property="userGrade" jdbcType="INTEGER" />
+		<result column="USER_SIG" property="userSig" jdbcType="VARCHAR" />
+		<result column="USER_SUMMARY" property="userSummary" jdbcType="VARCHAR" />
+		<result column="USER_SEX" property="userSex" jdbcType="INTEGER" />
+		<result column="USER_TUCAO" property="userTucao" jdbcType="INTEGER" />
+		<result column="USER_MUBIAO" property="userMubiao" jdbcType="INTEGER" />
+		<result column="USER_MB_SUC" property="userMbSuc" jdbcType="INTEGER" />
+		<result column="USER_ZHANGDAN" property="userZhangdan"
+			jdbcType="DOUBLE" />
+		<result column="LAST_LOGIN" property="lastLogin" jdbcType="DATE" />
+		<result column="USER_STATUS" property="userStatus" jdbcType="INTEGER" />
+		<result column="USER_LOGIN_COUNT" property="userLoginCount"
+			jdbcType="INTEGER" />
+		<result column="USER_CREATETIME" property="userCreatetime"
+			jdbcType="DATE" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		USER_ID, USER_NAME, USER_PASSWORD, USER_HEADIMG, USER_EXP, USER_GRADE,
+		USER_SIG,
+		USER_SUMMARY, USER_SEX, USER_TUCAO, USER_MUBIAO, USER_MB_SUC, USER_ZHANGDAN,
+		LAST_LOGIN,
+		USER_STATUS, USER_LOGIN_COUNT, USER_CREATETIME
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_hxp_user
+		where USER_ID = #{userId,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectByName" parameterType="java.lang.String"
+		resultType="java.lang.Integer">
+		select count(id) from t_hxp_user
+		where USER_NAME =
+		#{userName,jdbcType=VARCHAR}
+	</select>
+
+	<select id="login" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_hxp_user where USER_NAME = #{0} and USER_PASSWORD = #{1}
+	</select>
+
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_hxp_user
+		where USER_ID = #{userId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="cn.hxp.entity.THxpUser">
+		insert into t_hxp_user (USER_ID, USER_NAME, USER_PASSWORD,
+		USER_HEADIMG, USER_EXP, USER_GRADE,
+		USER_SIG, USER_SUMMARY, USER_SEX,
+		USER_TUCAO, USER_MUBIAO, USER_MB_SUC,
+		USER_ZHANGDAN, LAST_LOGIN, USER_STATUS,
+		USER_LOGIN_COUNT, USER_CREATETIME)
+		values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR},
+		#{userPassword,jdbcType=VARCHAR},
+		#{userHeadimg,jdbcType=VARCHAR}, #{userExp,jdbcType=INTEGER}, #{userGrade,jdbcType=INTEGER},
+		#{userSig,jdbcType=VARCHAR}, #{userSummary,jdbcType=VARCHAR},
+		#{userSex,jdbcType=INTEGER},
+		#{userTucao,jdbcType=INTEGER}, #{userMubiao,jdbcType=INTEGER}, #{userMbSuc,jdbcType=INTEGER},
+		#{userZhangdan,jdbcType=DOUBLE}, #{lastLogin,jdbcType=DATE},
+		#{userStatus,jdbcType=INTEGER},
+		#{userLoginCount,jdbcType=INTEGER}, #{userCreatetime,jdbcType=DATE})
+	</insert>
+	<insert id="insertSelective" parameterType="cn.hxp.entity.THxpUser">
+		insert into t_hxp_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				USER_ID,
+			</if>
+			<if test="userName != null">
+				USER_NAME,
+			</if>
+			<if test="userPassword != null">
+				USER_PASSWORD,
+			</if>
+			<if test="userHeadimg != null">
+				USER_HEADIMG,
+			</if>
+			<if test="userExp != null">
+				USER_EXP,
+			</if>
+			<if test="userGrade != null">
+				USER_GRADE,
+			</if>
+			<if test="userSig != null">
+				USER_SIG,
+			</if>
+			<if test="userSummary != null">
+				USER_SUMMARY,
+			</if>
+			<if test="userSex != null">
+				USER_SEX,
+			</if>
+			<if test="userTucao != null">
+				USER_TUCAO,
+			</if>
+			<if test="userMubiao != null">
+				USER_MUBIAO,
+			</if>
+			<if test="userMbSuc != null">
+				USER_MB_SUC,
+			</if>
+			<if test="userZhangdan != null">
+				USER_ZHANGDAN,
+			</if>
+			<if test="lastLogin != null">
+				LAST_LOGIN,
+			</if>
+			<if test="userStatus != null">
+				USER_STATUS,
+			</if>
+			<if test="userLoginCount != null">
+				USER_LOGIN_COUNT,
+			</if>
+			<if test="userCreatetime != null">
+				USER_CREATETIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userPassword != null">
+				#{userPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="userHeadimg != null">
+				#{userHeadimg,jdbcType=VARCHAR},
+			</if>
+			<if test="userExp != null">
+				#{userExp,jdbcType=INTEGER},
+			</if>
+			<if test="userGrade != null">
+				#{userGrade,jdbcType=INTEGER},
+			</if>
+			<if test="userSig != null">
+				#{userSig,jdbcType=VARCHAR},
+			</if>
+			<if test="userSummary != null">
+				#{userSummary,jdbcType=VARCHAR},
+			</if>
+			<if test="userSex != null">
+				#{userSex,jdbcType=INTEGER},
+			</if>
+			<if test="userTucao != null">
+				#{userTucao,jdbcType=INTEGER},
+			</if>
+			<if test="userMubiao != null">
+				#{userMubiao,jdbcType=INTEGER},
+			</if>
+			<if test="userMbSuc != null">
+				#{userMbSuc,jdbcType=INTEGER},
+			</if>
+			<if test="userZhangdan != null">
+				#{userZhangdan,jdbcType=DOUBLE},
+			</if>
+			<if test="lastLogin != null">
+				#{lastLogin,jdbcType=DATE},
+			</if>
+			<if test="userStatus != null">
+				#{userStatus,jdbcType=INTEGER},
+			</if>
+			<if test="userLoginCount != null">
+				#{userLoginCount,jdbcType=INTEGER},
+			</if>
+			<if test="userCreatetime != null">
+				#{userCreatetime,jdbcType=DATE},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="cn.hxp.entity.THxpUser">
+		update t_hxp_user
+		<set>
+			<if test="userName != null">
+				USER_NAME = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userPassword != null">
+				USER_PASSWORD = #{userPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="userHeadimg != null">
+				USER_HEADIMG = #{userHeadimg,jdbcType=VARCHAR},
+			</if>
+			<if test="userExp != null">
+				USER_EXP = #{userExp,jdbcType=INTEGER},
+			</if>
+			<if test="userGrade != null">
+				USER_GRADE = #{userGrade,jdbcType=INTEGER},
+			</if>
+			<if test="userSig != null">
+				USER_SIG = #{userSig,jdbcType=VARCHAR},
+			</if>
+			<if test="userSummary != null">
+				USER_SUMMARY = #{userSummary,jdbcType=VARCHAR},
+			</if>
+			<if test="userSex != null">
+				USER_SEX = #{userSex,jdbcType=INTEGER},
+			</if>
+			<if test="userTucao != null">
+				USER_TUCAO = #{userTucao,jdbcType=INTEGER},
+			</if>
+			<if test="userMubiao != null">
+				USER_MUBIAO = #{userMubiao,jdbcType=INTEGER},
+			</if>
+			<if test="userMbSuc != null">
+				USER_MB_SUC = #{userMbSuc,jdbcType=INTEGER},
+			</if>
+			<if test="userZhangdan != null">
+				USER_ZHANGDAN = #{userZhangdan,jdbcType=DOUBLE},
+			</if>
+			<if test="lastLogin != null">
+				LAST_LOGIN = #{lastLogin,jdbcType=DATE},
+			</if>
+			<if test="userStatus != null">
+				USER_STATUS = #{userStatus,jdbcType=INTEGER},
+			</if>
+			<if test="userLoginCount != null">
+				USER_LOGIN_COUNT = #{userLoginCount,jdbcType=INTEGER},
+			</if>
+			<if test="userCreatetime != null">
+				USER_CREATETIME = #{userCreatetime,jdbcType=DATE},
+			</if>
+		</set>
+		where USER_ID = #{userId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="cn.hxp.entity.THxpUser">
+		update t_hxp_user
+		set USER_NAME = #{userName,jdbcType=VARCHAR},
+		USER_PASSWORD = #{userPassword,jdbcType=VARCHAR},
+		USER_HEADIMG = #{userHeadimg,jdbcType=VARCHAR},
+		USER_EXP = #{userExp,jdbcType=INTEGER},
+		USER_GRADE = #{userGrade,jdbcType=INTEGER},
+		USER_SIG = #{userSig,jdbcType=VARCHAR},
+		USER_SUMMARY = #{userSummary,jdbcType=VARCHAR},
+		USER_SEX = #{userSex,jdbcType=INTEGER},
+		USER_TUCAO = #{userTucao,jdbcType=INTEGER},
+		USER_MUBIAO = #{userMubiao,jdbcType=INTEGER},
+		USER_MB_SUC = #{userMbSuc,jdbcType=INTEGER},
+		USER_ZHANGDAN = #{userZhangdan,jdbcType=DOUBLE},
+		LAST_LOGIN = #{lastLogin,jdbcType=DATE},
+		USER_STATUS = #{userStatus,jdbcType=INTEGER},
+		USER_LOGIN_COUNT = #{userLoginCount,jdbcType=INTEGER},
+		USER_CREATETIME = #{userCreatetime,jdbcType=DATE}
+		where USER_ID = #{userId,jdbcType=INTEGER}
+	</update>
+</mapper>

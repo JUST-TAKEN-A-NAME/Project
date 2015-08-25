@@ -1,0 +1,246 @@
+
+a{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+}
+.login-page{
+    text-align: center;
+}
+.login-page .logo img, .login-modal .logo img {
+    width: 252px;
+}
+img {
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    vertical-align: middle;
+    border: 0;
+    -ms-interpolation-mode: bicubic;
+}
+.login-page .title{
+    margin: 70px auto 50px;
+    border-bottom:1px solid #cccccc;
+    color: #b1b1b1;
+}
+ h2{
+    margin: 10px 0;
+    font-family: inherit;
+    line-height: 20px;
+    color: inherit;
+    text-rendering: optimizelegibility;
+}
+.login-page .title span{
+    position: relative;
+    background-color:#ffffff;
+    top: 10px;
+    padding: 0 30px;
+    border-bottom: 2px solid white;
+}
+.login-page .title span .active{
+    color: #ffc63f;
+    border-bottom: 2px solid #ffc63f;
+}
+.login-page .title span a, .login-modal .title span a {
+    color: #b1b1b1;
+}
+.login-page form{
+	padding:0px 28px;
+	width:100%;
+	max-width:400px;
+    padding-bottom: 40px;
+    margin: 0 auto 25px;
+}
+.login-page .input-prepend,.wornginput{
+    width: 100%;
+    margin-bottom: 15px;
+}
+.add-on{
+    width: 45px;
+    padding: 4px 5px;
+    min-width: 16px;
+    text-align: center;
+    border: 1px solid #ccc;
+    display: inline-block;
+    margin-right: -5px;
+    line-height: 34px;
+    -webkit-border-radius: 4px 0 0 4px;
+    -moz-border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px;
+    background-color: white;
+
+}
+.reg-on{
+	width: 45px;
+    padding: 4px 5px;
+    min-width: 16px;
+    text-align: center;
+    display: inline-block;
+    margin-right: -5px;
+    line-height: 34px;
+}
+.reg-on .isok{
+	color:green;
+}
+.reg-on .iserron{
+	color:red;
+}
+.login-page .input-prepend input,.wornginput input{
+    width: 228px;
+    width: calc(100% - 45px);
+    height: 44px;
+    padding: 4px 12px;
+    box-sizing: border-box;
+    border: 1px solid #CCCCCC;
+    outline: none;
+}
+.login-page .input-prepend input,.wornginput input{
+    position: relative;
+    margin-bottom: 0;
+    vertical-align: top;
+    -webkit-border-radius: 0 4px 4px 0;
+    -moz-border-radius: 0 4px 4px 0;
+    border-radius: 0 4px 4px 0;
+}
+.login-page .input-prepend button{
+	height: 44px;
+    padding: 4px 12px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 44px;
+    padding: 4px 12px;
+    box-sizing: border-box;
+    border: 1px solid #CCCCCC;
+    outline: none;
+	position: relative;
+    margin-bottom: 0;
+    vertical-align: top;
+    -webkit-border-radius: 0 4px 4px 0;
+    -moz-border-radius: 0 4px 4px 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.login-page .input-prepend input[type="text"]:focus, .login-page .input-prepend input[type="password"]:focus
+, .captcha input[type="text"]:focus{
+    transition:border linear .2s,box-shadow linear .5s;
+    -moz-transition:border linear .2s,-moz-box-shadow linear .5s;
+    -webkit-transition:border linear .2s,-webkit-box-shadow linear .5s;
+    border-color:rgba(93,149,242,.75);
+    box-shadow:0 0 5px rgba(93,149,242,.105);
+    -moz-box-shadow:0 0 5px rgba(93,149,242,.5);
+    -webkit-box-shadow:0 0 5px rgba(93,149,242,3);
+}
+.wornginput input[type="text"]:focus,.wornginput input[type="password"]:focus{
+    transition:border linear .2s,box-shadow linear .5s;
+    -moz-transition:border linear .2s,-moz-box-shadow linear .5s;
+    -webkit-transition:border linear .2s,-webkit-box-shadow linear .5s;
+    border-color: rgba(242, 46, 56, 0.75);
+    box-shadow:0 0 5px rgba(249, 81, 81, 0.62);
+    -moz-box-shadow:0 0 5px rgba(242, 116, 74, 0.5);
+    -webkit-box-shadow:0 0 5px rgb(242, 96, 51);
+}
+.wornginput input[type="text"],.wornginput input[type="password"]{
+    transition:border linear .2s,box-shadow linear .5s;
+    -moz-transition:border linear .2s,-moz-box-shadow linear .5s;
+    -webkit-transition:border linear .2s,-webkit-box-shadow linear .5s;
+    border-color: rgba(242, 46, 56, 0.75);
+    box-shadow:0 0 5px rgba(249, 81, 81, 0.62);
+    -moz-box-shadow:0 0 5px rgba(242, 116, 74, 0.5);
+    -webkit-box-shadow:0 0 5px rgb(242, 96, 51);
+}
+.captcha{
+	width:100%;
+	height: 50px;
+	margin-bottom: 10px;
+}
+
+.captcha input{
+	width: 60%;
+    height: 44px;
+    padding: 4px 12px;
+    box-sizing: border-box;
+    border: 1px solid #CCCCCC;
+    outline: none;
+    position: relative;
+    margin-bottom: 0;
+    vertical-align: top;
+    border-radius:4px;
+}
+.worngcaptcha{
+    width:100%;
+    height: 50px;
+    margin-bottom: 10px;
+
+}
+.worngcaptcha img{
+    height: 44px;
+    width: 38%;
+    border:1px solid #cccccc;
+    border-radius:4px;
+
+}
+.worngcaptcha input[type="text"]{
+    width: 60%;
+    height: 44px;
+    padding: 4px 12px;
+    outline: none;
+    position: relative;
+    margin-bottom: 0;
+    border:1px solid #CCCCCC;
+    outline: none;
+    vertical-align: top;
+    border-radius:4px;
+    transition:border linear .2s,box-shadow linear .5s;
+    -moz-transition:border linear .2s,-moz-box-shadow linear .5s;
+    -webkit-transition:border linear .2s,-webkit-box-shadow linear .5s;
+    border-color: rgba(242, 46, 56, 0.75);
+    box-shadow:0 0 5px rgba(249, 81, 81, 0.62);
+    -moz-box-shadow:0 0 5px rgba(242, 116, 74, 0.5);
+    -webkit-box-shadow:0 0 5px rgb(242, 96, 51);
+}
+.captcha img{
+    height: 44px;
+    width: 38%;
+    border:1px solid #cccccc;
+    border-radius:4px;
+}
+.login-page .input-prepend input{
+    height: 44px;
+    padding: 4px 12px;
+    box-sizing: border-box;
+}
+.control-group{
+    margin-top: 10px;
+}
+.submitbtn:hover{
+    transition:border linear .2s,box-shadow linear .5s;
+    -moz-transition:border linear .2s,-moz-box-shadow linear .5s;
+    -webkit-transition:border linear .2s,-webkit-box-shadow linear .5s;
+    outline:none;
+    border-color:rgba(93,149,242,.75);
+    box-shadow:0 0 18px rgba(93,149,242,.105);
+    -moz-box-shadow:0 0 18px rgba(93,149,242,.5);
+    -webkit-box-shadow:0 0 18px rgba(93,149,242,3);
+}
+
+.submitbtn{
+    font-size: 24px;
+    font-weight: 400;
+    -webkit-transition: background-color .4s;
+    -moz-transition: background-color .4s;
+    -ms-transition: background-color .4s;
+    -o-transition: background-color .4s;
+    transition: background-color .4s;
+}
+
+.worng{
+	text-align: left;
+	font-size:14px;
+	font-weight: bold;
+}
+.worng i{
+	font-size:16px;
+	margin: 0px 10px;
+}
+
