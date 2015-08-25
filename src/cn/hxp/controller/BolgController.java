@@ -39,6 +39,9 @@ public class BolgController extends BaseController{
 		return "bolg_index";
 	}
 	
+	
+	
+	
 	@RequestMapping("yuedu")
 	public String yeudu(){
 		HashMap<String,String> map = new HashMap<String, String>();
