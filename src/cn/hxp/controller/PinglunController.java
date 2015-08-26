@@ -98,7 +98,7 @@ public class PinglunController extends BaseController {
 				List<BolgPinglun> list = new ArrayList<BolgPinglun>();//查询结果容器
 				PaginationeEntity entity = new PaginationeEntity();
 				
-				PageParameter page = PageHepler.checkPageNum(currentPage, totalPage);
+				PageParameter page = PageHepler.checkPageNum(currentPage, totalPage);//判断，检查，纠正之后返回分页实体类！
 				
 				entity.setBolgId(bolgId);
 				entity.setPage(page);
