@@ -603,7 +603,9 @@ p.form-allowed-tags {
 .newindex_pagination_box .display{
 	background-color: #8D9398;
 }
-
+.newindex_pagination_box .display:hover{
+	background-color: #8D9398;
+}
 .a_right:hover,.a_left:hover{
     background-color: #1A4779;
 }

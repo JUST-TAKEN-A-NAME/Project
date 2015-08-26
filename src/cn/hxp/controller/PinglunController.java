@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.hxp.common.BaseController;
+import cn.hxp.common.PageHepler;
 import cn.hxp.common.entity.PageParameter;
 import cn.hxp.common.entity.PaginationeEntity;
 import cn.hxp.common.entity.PinglunEntity;
@@ -84,38 +85,21 @@ public class PinglunController extends BaseController {
 	
 	
 	@RequestMapping("loadComment")
-	public void loadComment(String bolgId,String currentPage){
+	public void loadComment(String bolgId,String currentPage) throws Exception{
 		HashMap<String, Object> map = new HashMap<String, Object>();
 //		String bolgId = request.getParameter("bolgId");
 		if(StringUtils.isNumeric(bolgId)){
 			int bolgId_int = Integer.parseInt(bolgId);
 			
-			int totalCount = bolgPinglunBiz.selectCountByBolgId(bolgId_int);//评论总条数
 			
+			int totalCount = bolgPinglunBiz.selectCountByBolgId(bolgId_int);//评论总条数
+			int totalPage = totalCount / 5 + ((totalCount % 5 == 0) ? 0 : 1);//默认值是5页！
 			if(totalCount > 0){
 				List<BolgPinglun> list = new ArrayList<BolgPinglun>();//查询结果容器
 				PaginationeEntity entity = new PaginationeEntity();
-				//entity.setCanshu("143");
-				PageParameter page = new PageParameter();
 				
-				if(StringUtils.isNumeric((currentPage))){//判断分页参数合法
-					int currentPage_int = Integer.parseInt(currentPage);
-					if(currentPage_int > totalCount/5){
-						page.setCurrentPage(currentPage_int);//设置分页参数
-					}else if(currentPage_int <= 0){
-						page.setCurrentPage(1);//设置分页参数
-					}else{
-						page.setCurrentPage(currentPage_int);//设置分页参数
-					}
-				}
-				/*else{
-					map.put("state", "503");
-					map.put("msg", "非法请求");
-					SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					logger.error("于"+spf.format(new Date())+"时，来自["+IpAddrUtil.getUserIp(request)+"]的请求中附带的分页参数不符合或非法！！！！");
-					JsonUtils.writeJson(response, map);
-					return;
-				}*/
+				PageParameter page = PageHepler.checkPageNum(currentPage, totalPage);
+				
 				entity.setBolgId(bolgId);
 				entity.setPage(page);
 				list = bolgPinglunBiz.selectCommentByBolgIdPage(entity);

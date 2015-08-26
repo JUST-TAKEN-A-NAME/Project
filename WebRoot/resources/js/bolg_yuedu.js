@@ -30,7 +30,7 @@ $(function(){
 	})
 	
 
-	$(".a_left").click(function(){
+	/*$(".a_left").click(function(){
 		loadingStyle();
 		var webPath = "/" + window.location.pathname.split("/")[1];
 		$.ajax({
@@ -38,12 +38,26 @@ $(function(){
 			data:{bolgId:$("#bolgId").val(),currentPage:$("#prePage").val()},
 			url: webPath + "/pinglun/loadComment",
 			success: function(data) {
-				resolveComment(data.list,data.page);
+				setTimeout("'resolveComment("+data.list+","+data.page+")'",1500); 
+				$("html,body").animate({scrollTop:$(".reply_title").offset().top},700);
 			}
 		});
+	});*/
+
+	$(".xixi a").click(function(){
+		if($(this).hasClass("a_left")){
+			loadingStyle();
+			setTimeout(returnGetComment($("#bolgId").val(),$("#prePage").val()),1000);
+		}else if($(this).hasClass("a_right")){
+			loadingStyle();
+			setTimeout(returnGetComment($("#bolgId").val(),$("#nextPage").val()),1000);
+			
+		}
 	});
 	
-	$(".a_right").click(function(){
+	
+	
+	/*$(".a_right").click(function(){
 		loadingStyle();
 		var webPath = "/" + window.location.pathname.split("/")[1];
 		$.ajax({
@@ -51,11 +65,32 @@ $(function(){
 			data:{bolgId:$("#bolgId").val(),currentPage:$("#nextPage").val()},
 			url: webPath + "/pinglun/loadComment",
 			success: function(data) {
-				resolveComment(data.list,data.page);
+				setTimeout("'resolveComment("+data.list+","+data.page+")'",1500); 
+				$("html,body").animate({scrollTop:$(".reply_title").offset().top},700);
 			}
 		});
-	});
+	});*/
 });
+
+
+function returnGetComment(bolgId,currentPage){//这里设置一个返回一个不带参数的函数，用来解决setTimeOut中方法的带参数问题！！！
+	return function(){
+		ajaxGetComment(bolgId,currentPage);
+	}
+}
+
+function ajaxGetComment(bolgId,currentPage){
+	var webPath = "/" + window.location.pathname.split("/")[1];
+	$.ajax({
+		type: 'POST',
+		data:{bolgId:bolgId,currentPage:currentPage},
+		url: webPath + "/pinglun/loadComment",
+		success: function(data) {
+			resolveComment(data.list,data.page);
+			$("html,body").animate({scrollTop:$(".reply_title").offset().top},700);
+		}
+	});
+}
 
 
 function optenReplyBox(id){
@@ -139,6 +174,7 @@ function postComment(){
 
 
 function loadComment(){
+	loadingStyle();
 	var bolgId = $("#bolgId").val();
 	var webPath = "/" + window.location.pathname.split("/")[1];
 	$.ajax({
@@ -170,8 +206,15 @@ function resolveComment(list,page){
 			     	'<div class="reply_msg"><p>'+item.comment+'</p></div>'+
 			 	'</div>'+
 			 '</div>';
-	})
+	});
+
+	
+	$(".yuedu_reply").css("display","none");
 	$(".yuedu_reply").html(html);
+	$(".yuedu_reply").fadeIn();
+	
+	
+	
 	var page = '<input type="hidden" id="prePage" value="'+page.prePage+'"/><input type="hidden" id="nextPage" value="'+page.nextPage+'"/>'+
 	'<span>共'+page.totalPage+'页</span>/<span>当前：第'+page.currentPage+'页</span>/<span>跳转到第<input type="text"/>页,<input type="button" value="GO"/></span>';
 	$(".div_tiaozhuan").html(page);
@@ -189,4 +232,8 @@ function changePageState(preVal,nextVal){
 function loadingStyle(){
 	var html ='<div class="loadbox"><div class="cssload-box-loading"></div><p>loading....</p></div>';
 	$(".yuedu_reply").html(html);
+}
+function hideLoading(){
+	$(".yuedu_reply").html("");
+	clearTimeout(t);
 }
