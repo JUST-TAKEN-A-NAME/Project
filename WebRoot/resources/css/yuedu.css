@@ -593,21 +593,36 @@ p.form-allowed-tags {
 .newindex_pagination_box .xixi{
     padding: 10px 30px;width:100%;
 }
+.newindex_pagination_box button{
+	border: 1px solid #ffffff;
+	padding: 15px 40px; 
+	background:#4D7199; 
+	color:#ffffff; 
+	border-radius: 4px;
+	outline: none;
+	transition: background-color 0.5s;
+    -moz-transition: background-color 0.5s;	/* Firefox 4 */
+    -webkit-transition: background-color 0.5s;	/* Safari ºÍ Chrome */
+    -o-transition: background-color 0.5s; 
+}
 .newindex_pagination_box .a_left{
-    padding: 15px 40px; background:#4D7199; color:#ffffff; border-radius: 4px; float:left;
+    float:left;
 }
 .newindex_pagination_box .a_right{
-    padding: 15px 40px; background:#4D7199; color:#ffffff; border-radius: 4px; float:right;
+    float:right;
+}
+.newindex_pagination_box .buttonHover{
+	
+}
+.newindex_pagination_box .buttonHover:hover{
+    background-color: #1A4779;
 }
 
-.newindex_pagination_box .display{
+.newindex_pagination_box .disabledLink{
 	background-color: #8D9398;
 }
 .newindex_pagination_box .display:hover{
 	background-color: #8D9398;
-}
-.a_right:hover,.a_left:hover{
-    background-color: #1A4779;
 }
 
 .div_tiaozhuan{

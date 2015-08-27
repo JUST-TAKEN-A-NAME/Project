@@ -116,7 +116,7 @@
         </div>
         <div class="newindex_pagination_box">
         	<div class="xixi">
-	            <a href="javascript:;" class="a_left">上一页</a><a href="javascript:;" class="a_right"> 下一页</a>
+	            <button id="toPrePage" class="a_left">上一页</button><button id="toNextPage" class="a_right"> 下一页</button>
 	            <div class="div_tiaozhuan"></div>
 	        </div>
 	    </div>

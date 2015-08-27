@@ -44,7 +44,7 @@ $(function(){
 		});
 	});*/
 
-	$(".xixi a").click(function(){
+	$(".xixi button").click(function(){
 		if($(this).hasClass("a_left")){
 			loadingStyle();
 			setTimeout(returnGetComment($("#bolgId").val(),$("#prePage").val()),1000);
@@ -213,7 +213,7 @@ function resolveComment(list,page){
 	$(".yuedu_reply").html(html);
 	$(".yuedu_reply").fadeIn();
 	
-	
+	changePageState(page.currentPage,page.totalPage);
 	
 	var page = '<input type="hidden" id="prePage" value="'+page.prePage+'"/><input type="hidden" id="nextPage" value="'+page.nextPage+'"/>'+
 	'<span>共'+page.totalPage+'页</span>/<span>当前：第'+page.currentPage+'页</span>/<span>跳转到第<input type="text"/>页,<input type="button" value="GO"/></span>';
@@ -224,8 +224,38 @@ function resolveComment(list,page){
 
 
 
-function changePageState(preVal,nextVal){
-	
+function changePageState(currentPage,totalPage){
+	if(totalPage == 1){
+		disabledLink($("#toNextPage"));
+		disabledLink($("#toPrePage"));
+	}else if(currentPage == totalPage){
+		disabledLink($("#toNextPage"));
+		enableLink($("#toPrePage"));
+	}else if(currentPage == 1){
+		disabledLink($("#toPrePage"));
+		enableLink($("#toNextPage"));
+	}else{
+		enableLink($("#toPrePage"));
+		enableLink($("#toNextPage"));
+	}
+}
+
+//禁用a标签
+function disabledLink(link){
+	//增加disabledLink样式
+	link.addClass("disabledLink");
+	link.removeClass("buttonHover");
+	//设置disabled属性
+	link.attr("disabled", "disabled");
+}
+
+//恢复a标签
+function enableLink(link){
+	//删除disabledLink样式
+	link.removeClass("disabledLink");
+	link.addClass("buttonHover");
+	//设置disabled属性
+	link.removeAttr("disabled");
 }
 
 
