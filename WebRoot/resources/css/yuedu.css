@@ -246,7 +246,7 @@ img {
 }
 
 .yuedu_reply_box .reply {
-	padding: 20px 40px 20px;
+	padding: 10px 40px 10px;
 	width: 100%;
 	overflow: auto;
 	border-bottom: 1px solid #cccccc;
@@ -301,8 +301,9 @@ img {
 	color: #4e5b68;
 }
 
-.reply_msg_box .reply_msg p{
+.reply_msg_box .reply_msg p,.reply_msg_lzl p{
 	word-wrap: break-word;
+	color: rgba(19, 53, 86, 0.85);
 }
 
 .reply_msg_box .reply_msg_lzl,.reply_msg_box .reply_msg_lzl_reply {
@@ -311,6 +312,7 @@ img {
 	border-top: 1px solid #cccccc;
 	padding: 0px;
 	padding-top: 10px;
+	padding-left: 20px;
 }
 
 .reply_msg_box .reply_msg_lzl_reply {
@@ -318,10 +320,16 @@ img {
 	display: none;
 }
 
+
+.lzl_bg{
+	/* background-color: rgba(45, 73, 88, 0.4);
+    border-radius: 10px; */
+}
+
 .reply_msg_lzl .reply_msg_lzl_info {
-	line-height: 50px;
 	margin: 0px;
-	font-size: 14px;
+    font-size: 14px;
+    padding: 10px 0px;
 }
 
 .reply_msg_lzl .reply_msg_lzl_info img {
@@ -360,14 +368,15 @@ img {
 
 .reply_box .huifubox {
 	resize: none;
-	width: 100%;
-	max-width: 750px;
-	max-height: 150px;
-	min-height: 60px;
-	padding: 8px 10px;
-	border-bottom: 1px solid #cccccc;
-	float: right;
-	overflow-y: auto;
+    width: 100%;
+    max-width: 750px;
+    max-height: 100px;
+    min-height: 100px;
+    padding: 8px 10px;
+    border: 1px;
+    border-bottom: 1px solid #cccccc;
+    float: right;
+    overflow-y: auto;
 }
 
 .reply_box .huifubox label {
@@ -376,6 +385,11 @@ img {
 
 .reply_img_btn .inse_smile {
 	
+}
+
+.reply_img_btn span {
+	line-height: 30px;
+	display:none;
 }
 
 .reply_msg_lzl_reply .reply_img_btn {

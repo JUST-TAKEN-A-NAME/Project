@@ -22,4 +22,9 @@ public interface BolgPinglunDao {
 	List<BolgPinglun> selectCommentByBolgIdPage(PaginationeEntity entity);
 	
 	int selectCountByBolgId(int bolgId);
+	
+	
+	int selectPingluntoConfim(int pinglunId);
+	
+	int pinglunIsBeReply(BolgPinglun entity);
 }

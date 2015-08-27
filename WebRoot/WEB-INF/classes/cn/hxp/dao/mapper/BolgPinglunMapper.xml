@@ -17,6 +17,12 @@
   </sql>
   
   
+  <select id="selectPingluntoConfim" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select count(0) from bolg_pinglun where pinglun_id = #{pinglunId,jdbcType=INTEGER}
+  </select>
+  
+  
+  
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -140,6 +146,16 @@
     </set>
     where pinglun_id = #{pinglunId,jdbcType=INTEGER}
   </update>
+  
+  
+  <update id="pinglunIsBeReply" parameterType="cn.hxp.entity.BolgPinglun">
+  	 update bolg_pinglun
+    	set pinglun_is_beReply = #{pinglunIsBereply,jdbcType=INTEGER}
+    where pinglun_id = #{pinglunId,jdbcType=INTEGER}
+  </update>
+  
+  
+  
   <update id="updateByPrimaryKey" parameterType="cn.hxp.entity.BolgPinglun" >
     update bolg_pinglun
     set pinglun_bolg_id = #{pinglunBolgId,jdbcType=INTEGER},

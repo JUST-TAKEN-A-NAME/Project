@@ -36,7 +36,7 @@ public class GlobalConstants {
 		public static final List<String> GLOBAL_BOLG_IMG_ID_LIST = new ArrayList<String>();
 		
 		
-		
+		public static final int GLOBAL_PINGLUN_IS_BE_REPLY = 1;
 		
 		
 		

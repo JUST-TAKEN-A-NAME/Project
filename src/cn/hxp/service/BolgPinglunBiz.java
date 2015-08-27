@@ -16,4 +16,8 @@ public interface BolgPinglunBiz {
 	
 
 	int selectCountByBolgId(int bolgId);
+	
+	int selectPingluntoConfim(int pinglunId);
+
+	int pinglunIsBeReply(BolgPinglun entity);
 }

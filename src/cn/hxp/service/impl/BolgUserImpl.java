@@ -22,6 +22,12 @@ public class BolgUserImpl implements BolgUserBiz {
 		// TODO Auto-generated method stub
 		return bolgUserDao.selectImgandName(userId);
 	}
+
+	@Override
+	public int selectUsertoConfim(int userId) {
+		// TODO Auto-generated method stub
+		return bolgUserDao.selectUsertoConfim(userId);
+	}
 	
 
 	

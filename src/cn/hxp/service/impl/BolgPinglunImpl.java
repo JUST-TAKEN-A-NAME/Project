@@ -41,6 +41,20 @@ public class BolgPinglunImpl implements BolgPinglunBiz {
 		// TODO Auto-generated method stub
 		return bolgPinglunDao.selectCountByBolgId(bolgId);
 	}
+
+
+	@Override
+	public int selectPingluntoConfim(int pinglunId) {
+		// TODO Auto-generated method stub
+		return bolgPinglunDao.selectPingluntoConfim(pinglunId);
+	}
+
+
+	@Override
+	public int pinglunIsBeReply(BolgPinglun entity) {
+		// TODO Auto-generated method stub
+		return bolgPinglunDao.pinglunIsBeReply(entity);
+	}
 	
 
 	

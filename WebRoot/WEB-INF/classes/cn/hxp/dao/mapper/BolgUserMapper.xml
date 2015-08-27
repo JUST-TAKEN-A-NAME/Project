@@ -21,6 +21,13 @@
     where user_id = #{userId,jdbcType=INTEGER}
   </select>
   
+  <select id="selectUsertoConfim" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select count(0) from bolg_user where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  
+  
+  
+  
   <select id="selectImgandName" resultType="java.util.Map" parameterType="java.lang.Integer" >
   	select user_name,user_head_img from bolg_user where user_id = #{userId,jdbcType=INTEGER}
   </select>

@@ -1,11 +1,13 @@
 package cn.hxp.dao;
 
+import java.util.List;
+
 import cn.hxp.entity.BolgPinglunBereply;
 
 public interface BolgPinglunBereplyDao {
     int deleteByPrimaryKey(Integer beReplyId);
 
-    int insert(BolgPinglunBereply record);
+    int newPinglunBereply(BolgPinglunBereply record);
 
     int insertSelective(BolgPinglunBereply record);
 
@@ -14,4 +16,6 @@ public interface BolgPinglunBereplyDao {
     int updateByPrimaryKeySelective(BolgPinglunBereply record);
 
     int updateByPrimaryKey(BolgPinglunBereply record);
+    
+    List<BolgPinglunBereply> selectBereplyComment(int pinglunId);
 }

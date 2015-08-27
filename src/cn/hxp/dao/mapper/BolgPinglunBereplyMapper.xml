@@ -20,20 +20,56 @@
     from bolg_pinglun_bereply
     where be_reply_id = #{beReplyId,jdbcType=INTEGER}
   </select>
+  
+  
+  
+  
+  <select id="selectBereplyComment" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" /> from bolg_pinglun_bereply where bolg_pinglun_id = #{pinglunId}
+  </select>
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from bolg_pinglun_bereply
     where be_reply_id = #{beReplyId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.hxp.entity.BolgPinglunBereply" >
-    insert into bolg_pinglun_bereply (be_reply_id, bolg_pinglun_id, from_user_id, 
+  
+  
+  
+  
+  
+  
+  <insert id="newPinglunBereply" parameterType="cn.hxp.entity.BolgPinglunBereply" >
+    insert into bolg_pinglun_bereply (bolg_pinglun_id, from_user_id, 
       from_user_ip, be_reply_date, 
       to_user_id, be_reply_content
       )
-    values (#{beReplyId,jdbcType=INTEGER}, #{bolgPinglunId,jdbcType=INTEGER}, #{fromUserId,jdbcType=INTEGER}, 
+    values (#{bolgPinglunId,jdbcType=INTEGER}, #{fromUserId,jdbcType=INTEGER}, 
       #{fromUserIp,jdbcType=VARCHAR}, #{beReplyDate,jdbcType=TIMESTAMP}, 
       #{toUserId,jdbcType=INTEGER}, #{beReplyContent,jdbcType=VARCHAR}
       )
+      
+      <selectKey resultType="int" keyProperty="beReplyId" order="AFTER">  
+        SELECT LAST_INSERT_ID() AS beReplyId  
+      </selectKey>
   </insert>
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <insert id="insertSelective" parameterType="cn.hxp.entity.BolgPinglunBereply" >
     insert into bolg_pinglun_bereply
     <trim prefix="(" suffix=")" suffixOverrides="," >

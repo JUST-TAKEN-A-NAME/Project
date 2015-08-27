@@ -18,4 +18,6 @@ public interface BolgUserDao {
     int updateByPrimaryKey(BolgUser record);
     
     HashMap<String, String> selectImgandName(int userId);
+    
+    int selectUsertoConfim(int userId);
 }

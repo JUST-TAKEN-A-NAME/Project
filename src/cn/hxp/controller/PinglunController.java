@@ -13,13 +13,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.util.HtmlUtils;
 
 import cn.hxp.common.BaseController;
+import cn.hxp.common.GlobalConstants;
 import cn.hxp.common.PageHepler;
 import cn.hxp.common.entity.PageParameter;
 import cn.hxp.common.entity.PaginationeEntity;
 import cn.hxp.common.entity.PinglunEntity;
 import cn.hxp.entity.BolgPinglun;
+import cn.hxp.entity.BolgPinglunBereply;
+import cn.hxp.service.BolgPinglunBereplyBiz;
 import cn.hxp.service.BolgPinglunBiz;
 import cn.hxp.service.BolgUserBiz;
 import cn.hxp.utils.IpAddrUtil;
@@ -32,6 +36,8 @@ public class PinglunController extends BaseController {
 
 	private static final Logger logger = LoggerFactory.getLogger(PinglunController.class);
 	
+	@Resource
+	public BolgPinglunBereplyBiz bolgPinglunBereplyBiz;
 	
 	@Resource
 	public BolgPinglunBiz bolgPinglunBiz;
@@ -52,8 +58,9 @@ public class PinglunController extends BaseController {
 			bolgId = Integer.parseInt(session.getAttribute("bolgId").toString());
 			
 			String msg = request.getParameter("msg");
+			
 			if(!StringUtils.checkIsEmpty(msg)){
-				
+				msg = HtmlUtils.htmlEscape(msg);
 				BolgPinglun bolgPinglun = new BolgPinglun();
 				bolgPinglun.setPinglunBolgId(bolgId);//bolgId
 				bolgPinglun.setPinglunrenId(userId);//userId
@@ -67,7 +74,8 @@ public class PinglunController extends BaseController {
 				int newBolgPinglunId = bolgPinglun.getPinglunId();
 				
 				HashMap<String, String> usermap = bolgUserBiz.selectImgandName(userId);
-				
+
+				map.put("userId", userId);
 				map.put("userName", usermap.get("user_name"));
 				map.put("userHeadImg", usermap.get("user_head_img"));
 				map.put("commentId", newBolgPinglunId);
@@ -94,31 +102,68 @@ public class PinglunController extends BaseController {
 			
 			int totalCount = bolgPinglunBiz.selectCountByBolgId(bolgId_int);//评论总条数
 			int totalPage = totalCount / 5 + ((totalCount % 5 == 0) ? 0 : 1);//默认值是5页！
-			if(totalCount > 0){
-				List<BolgPinglun> list = new ArrayList<BolgPinglun>();//查询结果容器
-				PaginationeEntity entity = new PaginationeEntity();
+			try {
 				
-				PageParameter page = PageHepler.checkPageNum(currentPage, totalPage);//判断，检查，纠正之后返回分页实体类！
-				
-				entity.setBolgId(bolgId);
-				entity.setPage(page);
-				list = bolgPinglunBiz.selectCommentByBolgIdPage(entity);
-				SimpleDateFormat smp = new SimpleDateFormat("yyyy-MM-dd");
-				List<PinglunEntity> resultList = new ArrayList<PinglunEntity>();//最终结果容器
-				HashMap<String,String> hashmap = new HashMap<String, String>();//翻译结果容器
-				//下面进行循环插值
-				for(BolgPinglun pinglun : list){
-					hashmap = bolgUserBiz.selectImgandName(pinglun.getPinglunrenId());
-					resultList.add(new PinglunEntity(hashmap.get("user_head_img"), pinglun.getPinglunId().toString(), hashmap.get("user_name"), smp.format(pinglun.getPinglunDate()),pinglun.getPinglunContent()));
-					//hashmap.clear();
+				if(totalCount > 0){
+					List<BolgPinglun> list = new ArrayList<BolgPinglun>();//查询结果容器
+					PaginationeEntity entity = new PaginationeEntity();
+					
+					PageParameter page = PageHepler.checkPageNum(currentPage, totalPage);//判断，检查，纠正之后返回分页实体类！
+					
+					entity.setBolgId(bolgId);
+					entity.setPage(page);
+					list = bolgPinglunBiz.selectCommentByBolgIdPage(entity);
+					SimpleDateFormat smp = new SimpleDateFormat("yyyy-MM-dd");
+					List<BolgPinglunBereply> bereply_list = new ArrayList<BolgPinglunBereply>();//回复楼中楼的容器
+					List<PinglunEntity> resultList = new ArrayList<PinglunEntity>();//最终结果容器
+					HashMap<String,String> hashmap = new HashMap<String, String>();//翻译结果容器
+					//下面进行循环插值
+					
+					for(BolgPinglun pinglun : list){
+						PinglunEntity pinglungEntity = new PinglunEntity();//实例化结果容器实体类
+						
+						if(pinglun.getPinglunIsBereply() == GlobalConstants.GLOBAL_PINGLUN_IS_BE_REPLY){
+							bereply_list = bolgPinglunBereplyBiz.selectBereplyComment(pinglun.getPinglunId());
+							if(bereply_list.size()>0){
+								for(BolgPinglunBereply bolgPinglunBereply : bereply_list){
+									hashmap = bolgUserBiz.selectImgandName(bolgPinglunBereply.getFromUserId());
+									bolgPinglunBereply.setFromUserName(hashmap.get("user_name"));
+									bolgPinglunBereply.setFromUserHeadImg(hashmap.get("user_head_img"));
+									bolgPinglunBereply.setBeReplyDateString(smp.format(bolgPinglunBereply.getBeReplyDate()));
+									hashmap = bolgUserBiz.selectImgandName(bolgPinglunBereply.getToUserId());
+									bolgPinglunBereply.setToUserName(hashmap.get("user_name"));
+								}
+								pinglungEntity.setBereplyList(bereply_list);
+							}
+						}
+						hashmap = bolgUserBiz.selectImgandName(pinglun.getPinglunrenId());
+						pinglungEntity.setComment(pinglun.getPinglunContent());
+						pinglungEntity.setCommentDate(smp.format(pinglun.getPinglunDate()));
+						pinglungEntity.setCommentId(pinglun.getPinglunId());
+						pinglungEntity.setUserHeadImg(hashmap.get("user_head_img"));
+						pinglungEntity.setUserId(pinglun.getPinglunrenId());
+						pinglungEntity.setUserName(hashmap.get("user_name"));
+						resultList.add(pinglungEntity);
+						
+						//hashmap.clear();
+					}
+					map.put("state", "666");
+					map.put("list", resultList);
+					map.put("page", page);
+				}else{
+					map.put("state", "404");
+					map.put("msg", "还没有人评论！！");	
 				}
-				map.put("state", "666");
-				map.put("list", resultList);
-				map.put("page", page);
-			}else{
-				map.put("state", "404");
-				map.put("msg", "还没有人评论！！");	
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				map.put("state", "503");
+				map.put("msg", "评论加载错误.....");
+				JsonUtils.writeJson(response, map);
+				return;
 			}
+			
 		}else{
 			map.put("state", "404");
 			map.put("msg", "未找到这篇博客的评论！！");

@@ -127,6 +127,7 @@
 
 <!--输入评论 start-->
 <div class="comment-respond_box">
+	<input type="hidden" id="lzl_reply_id" value=""/><input type="hidden" id="lzl_reply_userid" value=""/>
     <div id="respond" class="comment-respond">
         <h3 id="reply-title" class="comment-reply-title">Leave a Reply 
             <small>
