@@ -90,11 +90,11 @@
         </div>
         <div class="post-navigation">
 			<div class="post-navigation-inner">
-				<div class="post-nav-prev">
+				<div class="post-nav-prev post-nav-height">
 					<p>上一篇:</p>
 					<h4><a href="javascript:;" title="">猪八戒 ，原名沉香，后改名猎狐者，生于赫顿玛于赫顿玛于赫顿玛尔。。。</a></h4>
 				</div>
-                <div class="post-nav-next">
+                <div class="post-nav-next post-nav-height">
 					<p>下一篇:</p>
 					<h4><a href="javascript:;" title="">The Life and Works of Dieter Rams</a></h4>
 				</div>
@@ -127,7 +127,7 @@
 <div class="comment-respond_box">
 	<input type="hidden" id="lzl_reply_id" value=""/><input type="hidden" id="lzl_reply_userid" value=""/>
     <div id="respond" class="comment-respond">
-        <h3 id="reply-title" class="comment-reply-title">你的评论</h3>
+        <h3 id="reply-title" class="comment-reply-title">Leave Reply</h3>
         <div id="commentform" class="comment-form">
         	<p class="comment-notes">-------------------------------------------------------</p>
             <!-- <p class="comment-notes">为杜绝无意义回复，请用社交账号登录之后，再发表评论！</p> -->
