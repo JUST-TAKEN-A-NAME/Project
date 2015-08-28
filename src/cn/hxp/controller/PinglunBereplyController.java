@@ -114,8 +114,19 @@ public class PinglunBereplyController extends BaseController {
 				return;
 			}
 		}
+
+		HashMap<String,String> hashmap = new HashMap<String, String>();//翻译结果容器
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		hashmap = bolgUserBiz.selectImgandName(entity.getFromUserId());
+		entity.setFromUserName(hashmap.get("user_name"));
+		entity.setFromUserHeadImg(hashmap.get("user_head_img"));
+		entity.setBeReplyDateString(sdf.format(entity.getBeReplyDate()));
+		hashmap = bolgUserBiz.selectImgandName(entity.getToUserId());
+		entity.setToUserName(hashmap.get("user_name"));
+		
 		map.put("state", "666");
 		map.put("msg", "评论成功！！");
+		map.put("entity", entity);
 		JsonUtils.writeJson(response, map);
 		
 	}

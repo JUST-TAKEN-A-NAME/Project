@@ -107,12 +107,10 @@
     <!----差看评论 start--->
     <div class="yuedu_reply_box">
         <div class="reply_title">
-            <div class="title_bgimg"><input type="hidden" id="totalCount" value="${totalCount}"><h3>共有${totalCount}条评论：</h3></div>
+            <div class="title_bgimg"><h3>共有<span class="totalCount">${totalCount}</span>条评论<label>(包含楼中楼)</label></h3></div>
         </div>
         <div class="reply_context_box">
-            <div class="yuedu_reply">
-               
-            </div>
+            <div class="yuedu_reply"></div>
         </div>
         <div class="newindex_pagination_box">
         	<div class="xixi">
@@ -129,13 +127,10 @@
 <div class="comment-respond_box">
 	<input type="hidden" id="lzl_reply_id" value=""/><input type="hidden" id="lzl_reply_userid" value=""/>
     <div id="respond" class="comment-respond">
-        <h3 id="reply-title" class="comment-reply-title">Leave a Reply 
-            <small>
-                <a rel="nofollow" id="cancel-comment-reply-link" href="javascript:;" style="display:none;">Cancel reply</a>
-            </small>
-        </h3>
+        <h3 id="reply-title" class="comment-reply-title">你的评论</h3>
         <div id="commentform" class="comment-form">
-            <p class="comment-notes">杜绝无意义回复，请用社交账号登录之后，再发表评论！</p>
+        	<p class="comment-notes">-------------------------------------------------------</p>
+            <!-- <p class="comment-notes">为杜绝无意义回复，请用社交账号登录之后，再发表评论！</p> -->
             <!--<p class="comment-form-author">
                 <input id="author" name="author" type="text" placeholder="你的称呼" value="" size="30">
                 <label for="author">Author</label> <span class="required">*</span>
@@ -144,9 +139,10 @@
                 <input id="email" name="email" type="text" placeholder="你的邮箱" value="" size="30">
                 <label for="email">Email</label><span class="required">*</span>
             </p>-->
-            <p class="comment-form-comment">
-                <textarea id="comment" name="comment" cols="45" rows="6"></textarea>
-            </p>						
+            <div class="comment-form-comment">
+            	<!-- <div class="textarea_sty"></div> -->
+                <textarea id="comment" name="comment" cols="45" rows="6"></textarea> 
+            </div>						
             <p class="form-submit"><input name="submit" type="button" id="postComment" class="submit" value="发表评论"></p>					
         </div>
     </div>

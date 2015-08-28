@@ -80,6 +80,7 @@ public class PinglunController extends BaseController {
 				map.put("userHeadImg", usermap.get("user_head_img"));
 				map.put("commentId", newBolgPinglunId);
 				map.put("commentDate", StringUtils.formateDate(now));
+				map.put("totalCount", bolgPinglunBiz.selectCountByBolgId(bolgId));
 				
 				map.put("state", "666");
 			}

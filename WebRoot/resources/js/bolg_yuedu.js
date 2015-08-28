@@ -1,27 +1,6 @@
 $(function(){
-	window.onload = function(){
-		var i = $("#totalCount").val();
-		if(!isNaN(i)){
-			var webPath = "/" + window.location.pathname.split("/")[1];
-			var bolgId = $("#bolgId").val();
-			$.ajax({
-				type: 'POST',
-				url: webPath + "/bolg/getContentByBolgId?bolgId=" + bolgId,
-				success: function(data) {
-					if (data.state == 666) {
-						var end = "<div class='end'>------------------------END------------------------</div>";
-						$("#bolg_content").html(data.content + end);
-					} else {
-						alert(data.msg);
-					}
-				}
-			});
-
-			loadComment();
-		}
-	};
 	
-	
+	initBolg();
 	
 	$("#postComment").click(function(){
 		$(this).attr("disabled","disabled");
@@ -41,6 +20,24 @@ $(function(){
 	});
 	
 });
+function initBolg(){
+	var webPath = "/" + window.location.pathname.split("/")[1];
+	var bolgId = $("#bolgId").val();
+	$.ajax({
+		type: 'POST',
+		url: webPath + "/bolg/getContentByBolgId?bolgId=" + bolgId,
+		success: function(data) {
+			if (data.state == 666) {
+				var end = "<div class='end'>------------------------END------------------------</div>";
+				$("#bolg_content").html(data.content + end);
+			} else {
+				alert(data.msg);
+			}
+		}
+	});
+
+	loadComment();
+}
 
 
 function returnGetComment(bolgId,currentPage){//这里设置一个返回一个不带参数的函数，用来解决setTimeOut中方法的带参数问题！！！
@@ -62,11 +59,23 @@ function ajaxGetComment(bolgId,currentPage){
 	});
 }
 
-function openReplyBox(id){
+function openReplyBox(id){//这是回复评论  （父级）此处ID的值是评论表的主键
 	var userId = $(".user_info").find("input[type='hidden']").val();
 	var name = $("#"+id).find("span.user_name").text();
 	resolveReplyBox(id,name,userId);
 }
+
+
+function openReplyBoxInLZL(id){//这是回复评论中的楼中楼评论  （子级 ） 此处ID的值是评论表Bereply的主键
+	
+	var div = $("#"+id);
+	
+	var comment_id = div.closest(".reply_msg_box").attr("id");//从当前开始向上匹配一个class=“xxx”的div 并获取ID
+	var userId = div.find("input[type='hidden']").val();//获取div里面的隐藏域的值
+	var name =div.find("span.huifuzhe").text();
+	resolveReplyBox(comment_id,name,userId);
+}
+
 
 
 function resolveReplyBox(id,toUserName,userId){
@@ -130,7 +139,7 @@ function postComment(){
 		success: function(data) {
 			if (data.state == 666) {
 				alert("发表成功！");
-
+				
 				var html = 
 				'<div class="reply"><div class="user_head_img"><img src="'+data.userHeadImg+'"/></div>'+
 					'<div class="reply_msg_box" id="'+data.commentId+'">'+
@@ -142,9 +151,18 @@ function postComment(){
 				     	'<div class="reply_msg"><p>'+textareaVal+'</p></div>'+
 				 	'</div>'+
 				 '</div>';
+				if(data.totalCount != null){
+					$(".title_bgimg").find("span.totalCount").text(data.totalCount);
+				}
+				$(".yuedu_reply").css("display","none");
+				if($(".nocomment").length > 0){
+					$(".yuedu_reply").html(html);
+				}else{
+					$(".yuedu_reply").append(html);
+				}
+				$(".yuedu_reply").fadeIn();
+				$("textarea").val("");
 				
-				
-				$(".yuedu_reply").append(html);
 			} else {
 				alert(data.msg);
 			}
@@ -164,7 +182,14 @@ function loadComment(){
 		success: function(data) {
 			if (data.state == 666) {
 				resolveComment(data.list,data.page);
+				
+			} else if(data.state == 404){
+				var html = '<div class="nocomment"><h3>暂无评论</h3></div>';
+				$(".yuedu_reply").html(html);
+				$(".newindex_pagination_box").css("display","none");
+				
 			} else {
+				
 				alert(data.msg);
 			}
 		}
@@ -183,9 +208,9 @@ function resolveComment(list,page){
 			    	'</div><div class="reply_msg"><p>'+item.comment+'</p></div><div class="lzl_bg">';
 		if(item.bereplyList!=null){
 			$.each(item.bereplyList,function(i,item2){
-				html +='<div class="reply_msg_lzl"><div class="reply_msg_lzl_info"><img src="'+item2.fromUserHeadImg+'"><span class="huifuzhe">'+item2.fromUserName+'</span>回复：'+
+				html +='<div class="reply_msg_lzl" id="'+item2.beReplyId+'"><input type="hidden" value="'+item2.fromUserId+'"/><div class="reply_msg_lzl_info"><img src="'+item2.fromUserHeadImg+'"><span class="huifuzhe">'+item2.fromUserName+'</span>回复：'+
 			        	'<span class="beihuifu">'+item2.toUserName+'</span><span class="border_left">发表于'+item2.beReplyDateString+'</span><span class="border_left">'+
-			        	'<a href="javascript:openReplyBox('+item2.bolgPinglunId+');">回复</a></span></div><p>'+item2.beReplyContent+'</p></div>';
+			        	'<a href="javascript:openReplyBoxInLZL('+item2.beReplyId+');">回复</a></span></div><p>'+item2.beReplyContent+'</p></div>';
 			});
 		}
         html += 
@@ -302,10 +327,18 @@ function ajaxReplyComment(){
 		url: webPath + "/pinglunbereply/postReplyComment?v=" + new Date().getTime(),
 		success: function(data) {
 			if (data.state == 666) {
-				alert("操作成功！");
 				$("#lzl_reply_userid").val("");
 				$("#lzl_reply_id").val("");
 			    $("#reply_msg_lzl_reply").remove();
+			    if(data.entity != null){
+			    	var item2 = data.entity;
+			    	var html ='<div class="reply_msg_lzl" id="'+item2.beReplyId+'" style="display:none;"><input type="hidden" value="'+item2.fromUserId+'"/><div class="reply_msg_lzl_info">'+
+			    		'<img src="'+item2.fromUserHeadImg+'"><span class="huifuzhe">'+item2.fromUserName+'</span>回复：<span class="beihuifu">'+item2.toUserName+'</span>'+
+			    		'<span class="border_left">发表于'+item2.beReplyDateString+'</span><span class="border_left"><a href="javascript:openReplyBoxInLZL('+item2.beReplyId+');">回复</a></span></div><p>'+item2.beReplyContent+'</p></div>';
+			    	
+			    	$("#"+commentIdVal).append(html);
+			    	$("#"+commentIdVal+" div:last-child").fadeIn();
+			    }
 			} else {
 				alert(data.msg);
 			}
@@ -314,13 +347,6 @@ function ajaxReplyComment(){
 	
 	
 	
-}
-
-
-function formateDate(time){
-	var JsonDateValue = new Date(time);
-	var text = JsonDateValue.getYear()+"-"+JsonDateValue.getMonth()+"-"+JsonDateValue.getDay()+" "+JsonDateValue.getHours()+":"+JsonDateValue.getMinutes()+":"+JsonDateValue.getSeconds();
-	return text;
 }
 
 
